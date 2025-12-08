@@ -6,7 +6,7 @@ public class ShopApp {
         Product ecran = new Product("Écran", 200);
 
         CartManager m = new CartManager();
-        m.add(new CartItem(clavier, 2));
+
         m.add(new CartItem(souris, 1));
         m.add(new CartItem(ecran, 1));
 

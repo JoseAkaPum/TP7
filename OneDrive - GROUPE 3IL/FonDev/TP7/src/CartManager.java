@@ -9,42 +9,48 @@ public class CartManager {
     }
 
     public void add(CartItem c) {
-        items[count] = c;
-        count = count + 1;
+        if (count < items.length) {  
+            items[count] = c;
+            count++;
+        }
     }
 
     public void printCart() {
         System.out.println("Contenu du panier :");
-        for (int i = 0; i < items.length; i++) {
-            CartItem c = items[i];
-            System.out.println("- " + c.product.name + " x " + c.quantity);
-            double t = c.product.priceHt * 1.2;
-            System.out.println("  Prix TTC ligne : " + t);
+        for (int i = 0; i < count; i++) {
+            CartItem cart = items[i];
+            if (cart!=null) {
+            System.out.println("- " + cart.product.name + " x " + cart.quantity);
+            double priceWithTVA = cart.product.priceHt * 1.2 * cart.quantity;
+            System.out.println("  Prix TTC ligne : " + priceWithTVA);
+        }
+            else {
+            	System.out.println("Il n'y a pas d'item dans le panier");
+            	break;
+            }
         }
     }
 
     public double totalTtc() {
         double totalHt = 0;
         for (int i = 0; i < count; i++) {
-            CartItem c = items[i];
-            totalHt = totalHt + c.product.priceHt;
+            totalHt += (items[i].product.priceHt * items[i].quantity);
         }
-        double totalTtc = totalHt * 1.1;
-        return totalTtc;
+        return totalHt * 1.2; 
     }
 
     public double totalWithDiscount() {
-        double t = totalTtc();
-        double d = 0;
-        if (t > 50) {
-            if (t > 100) {
-                d = t * 0.1;
+        double totalTtc = totalTtc();
+        double totalWithDiscount = 0;
+        if (totalTtc > 50) {
+            if (totalTtc > 100) {
+                totalWithDiscount = totalTtc * 0.9;
             } else {
-                d = t * 0.05;
+                totalWithDiscount = totalTtc * 0.95;
             }
         } else {
-            d = 0;
+            totalWithDiscount = 0;
         }
-        return t - d;
+        return totalWithDiscount;
     }
 }

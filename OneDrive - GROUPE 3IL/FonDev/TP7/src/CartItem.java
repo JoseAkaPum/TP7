@@ -3,8 +3,8 @@ public class CartItem {
     public Product product;
     public int quantity;
 
-    public CartItem(Product p, int q) {
-        product = p;
-        quantity = q;
+    public CartItem(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
     }
 }
